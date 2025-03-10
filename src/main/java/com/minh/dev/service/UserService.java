@@ -3,6 +3,8 @@ package com.minh.dev.service;
 import com.minh.dev.dto.request.UserCreationRequest;
 import com.minh.dev.dto.request.UserUpdateRequest;
 import com.minh.dev.entity.User;
+import com.minh.dev.exception.AppException;
+import com.minh.dev.exception.ErrorCode;
 import com.minh.dev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class UserService {
         User user = new User();
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         user.setUsername(request.getUsername());
